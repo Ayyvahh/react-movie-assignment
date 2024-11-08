@@ -24,7 +24,7 @@ function MovieListPageTemplate({ movies, title, action }) {
 
     return (
         <Grid container>
-            <Grid size={12}>
+            <Grid size={12} sx={{ marginTop: '13px' }}>
                 <Header title={title} />
             </Grid>
             <Grid container sx={{flex: "1 1 500px"}}>

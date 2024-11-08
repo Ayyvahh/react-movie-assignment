@@ -11,7 +11,8 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import MoviesContextProvider from "./contexts/moviesContext";
 import AddMovieReviewPage from './pages/addMovieReviewPage'
 import UpcomingMoviesPage from "./pages/upcomingMoviesPage";
-
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -23,9 +24,19 @@ const queryClient = new QueryClient({
     },
 });
 
+const darkTheme = createTheme({
+    palette: {
+        mode: 'dark',
+        primary: {
+            main: '#FFDE59',
+        },
+    },
+});
 
 const App = () => {
     return (
+        <ThemeProvider theme={darkTheme}>
+            <CssBaseline />
         <QueryClientProvider client={queryClient}>
             <BrowserRouter>
                 <SiteHeader />
@@ -44,6 +55,8 @@ const App = () => {
             </BrowserRouter>
             <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
+        </ThemeProvider>
+
     );
 };
 

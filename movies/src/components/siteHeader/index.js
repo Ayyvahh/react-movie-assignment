@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { styled } from '@mui/material/styles';
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import img from '../../images/headerLogo.png';
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
@@ -40,10 +41,25 @@ const SiteHeader = ({ history }) => {
 
     return (
         <>
-            <AppBar position="fixed" color="secondary">
+            <AppBar position="fixed"
+            sx ={{
+                backgroundColor: "black",
+                color: "white",
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.7)',
+
+            }}>
                 <Toolbar>
-                    <Typography variant="h4" sx={{ flexGrow: 1 }}>
-                        TMDB Client
+                    <Typography variant="h4" sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
+                        <img
+                            src={img}
+                            alt="Logo"
+                            style={{
+                                height: 60,
+                                marginRight: '8px',
+                                marginBottom:'3px',
+                            }}
+                            onClick={() => navigate('/')}
+                        />
                     </Typography>
                     <Typography variant="h6" sx={{ flexGrow: 1 }}>
                         All you ever wanted to know about Movies!

@@ -33,11 +33,11 @@ export default function MovieCard({ movie, action }) {
     };
 
     return (
-        <Card>
+        <Card sx={ { borderRadius: '10px'}}>
             <CardHeader
                 avatar={
                     movie.favorite ? (
-                        <Avatar sx={{ backgroundColor: 'red' }}>
+                        <Avatar sx={{ backgroundColor: '#FFDE59' }}>
                             <FavoriteIcon />
                         </Avatar>
                     ) : null
@@ -49,7 +49,7 @@ export default function MovieCard({ movie, action }) {
                 }
             />
             <CardMedia
-                sx={{height: 500}}
+                sx={{height: 400}}
                 image={
                     movie.poster_path
                         ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
