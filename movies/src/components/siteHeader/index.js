@@ -15,7 +15,46 @@ import img from '../../images/headerLogo.png';
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
-const SiteHeader = ({ history }) => {
+// https://www.smashingmagazine.com/2020/07/styled-components-react/
+const StyledAppBar = styled(AppBar)({
+    backgroundColor: "black",
+    color: "white",
+    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.7)',
+});
+
+const StyledTypography = styled(Typography)({
+    flexGrow: 1,
+    display: 'flex',
+    alignItems: 'center',
+});
+
+const StyledImg = styled('img')(({ theme }) => ({
+    height: 50,
+    padding: 1,
+    marginRight: '8px',
+    marginBottom: '3px',
+    [theme.breakpoints.down("md")]: {
+        height: 50,
+
+    },
+    [theme.breakpoints.down("sm")]: {
+        height: 40,
+    },
+}));
+
+const StyledButton = styled(Button)({
+     color: 'white',
+    '&:hover':{
+        color:'#FF3131',
+        transform: 'scale(1.2)',
+        marginLeft: 3,
+        transition: 'all 0.2s ease',
+    }
+});
+
+
+const SiteHeader
+= ({ history }) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
@@ -28,7 +67,7 @@ const SiteHeader = ({ history }) => {
         { label: "Home", path: "/" },
         { label: "Favorites", path: "/movies/favorites" },
         { label: "Upcoming", path: "/movies/upcoming" },
-        { label: "Option 4", path: "/" },
+        { label: "Must Watch", path: "/" },
     ];
 
     const handleMenuSelect = (pageURL) => {
@@ -41,26 +80,15 @@ const SiteHeader = ({ history }) => {
 
     return (
         <>
-            <AppBar position="fixed"
-            sx ={{
-                backgroundColor: "black",
-                color: "white",
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.7)',
-
-            }}>
+            <StyledAppBar position="fixed">
                 <Toolbar>
-                    <Typography variant="h4" sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
-                        <img
+                    <StyledTypography variant="h4">
+                        <StyledImg
                             src={img}
                             alt="Logo"
-                            style={{
-                                height: 60,
-                                marginRight: '8px',
-                                marginBottom:'3px',
-                            }}
                             onClick={() => navigate('/')}
                         />
-                    </Typography>
+                    </StyledTypography>
                     <Typography variant="h6" sx={{ flexGrow: 1 }}>
                         All you ever wanted to know about Movies!
                     </Typography>
@@ -103,18 +131,18 @@ const SiteHeader = ({ history }) => {
                     ) : (
                         <>
                             {menuOptions.map((opt) => (
-                                <Button
+                                <StyledButton
                                     key={opt.label}
                                     color="inherit"
                                     onClick={() => handleMenuSelect(opt.path)}
                                 >
                                     {opt.label}
-                                </Button>
+                                </StyledButton>
                             ))}
                         </>
                     )}
                 </Toolbar>
-            </AppBar>
+            </StyledAppBar>
             <Offset />
         </>
     );
