@@ -20,15 +20,14 @@ function MovieListPageTemplate({ movies, title, action }) {
     const handleChange = (type, value) => {
         if (type === "name") setNameFilter(value);
         else setGenreFilter(value);
-    }
-
+    };
 
     return (
         <Grid container>
             <Grid size={12} sx={{ marginTop: '13px' }}>
                 <Header title={title} />
             </Grid>
-            <Grid container item spacing={2} xs={12} sx={{flex: "1 1 500px"}}>
+            <Grid container sx={{flex: "1 1 500px"}}>
                 <Grid
                     key="find"
                     size={{xs: 12, sm: 6, md: 4, lg: 3, xl: 2}}

@@ -14,14 +14,29 @@ import img from '../../images/popcorn.png';
 import { getGenres } from "../../api/tmdb-api";
 import { useQuery } from "react-query";
 import Spinner from '../spinner';
+import Box from "@mui/material/Box";
+import {styled} from "@mui/material/styles";
+
+
+const StyledCard = styled(Card)({
+    minHeight:400,
+    width: '100%',
+    borderRadius:'15px',
+    backgroundColor:'#1B1B1B'
+});
 
 
 
 const formControl = {
     margin: 1,
     minWidth: 220,
-    backgroundColor: "rgb(18, 18, 18)"
+    minHeight: 30,
+    borderRadius: "12px",
+    width: { xs: '100%', sm: 'auto' },
+
 };
+
+
 
 export default function FilterMoviesCard(props) {
     const { data, error, isLoading, isError } = useQuery("genres", getGenres);
@@ -53,18 +68,17 @@ export default function FilterMoviesCard(props) {
     };
 
     return (
-        <Card
-            sx={{
-                minHeight:400, width: '100%', borderRadius:'15px', backgroundColor:'#1B1B1B'
-            }}
-            variant="outlined">
+        <StyledCard>
             <CardContent>
-                <Typography variant="h5" component="h1"sx={{color:'white'}} >
-                    <SearchIcon fontSize="medium" sx={{color:'white'}} />
-                    {"  "}Filter the movies.
-                </Typography>
+                <Box sx={{ display: 'inline-flex', alignItems: 'center' }}>
+                    <SearchIcon fontSize="large" color='primary' />
+                    <Typography variant="h5" component="h2" sx={{ marginLeft: 1 }}>
+                        Search Movies
+                    </Typography>
+                </Box>
+
                 <TextField
-                    sx={{...formControl}}
+                    sx={formControl}
                     id="filled-search"
                     label="Search field"
                     type="search"
@@ -72,7 +86,15 @@ export default function FilterMoviesCard(props) {
                     value={props.titleFilter}
                     onChange={handleTextChange}
                 />
-                <FormControl sx={{...formControl}}>
+
+                <Box sx={{ display: 'inline-flex', alignItems: 'center', marginTop: 2 }}>
+                    <FilterIcon fontSize="large" color='primary' />
+                    <Typography variant="h5" component="h3" sx={{ marginLeft: 1 }}>
+                        Filter By Genre
+                    </Typography>
+                </Box>
+
+                <FormControl sx={formControl}>
                     <InputLabel id="genre-label">Genre</InputLabel>
                     <Select
                         labelId="genre-label"
@@ -81,28 +103,29 @@ export default function FilterMoviesCard(props) {
                         value={props.genreFilter}
                         onChange={handleGenreChange}
                     >
-                        {genres.map((genre) => {
-                            return (
-                                <MenuItem key={genre.id} value={genre.id}>
-                                    {genre.name}
-                                </MenuItem>
-                            );
-                        })}
+                        {genres.map((genre) => (
+                            <MenuItem key={genre.id} value={genre.id}>
+                                {genre.name}
+                            </MenuItem>
+                        ))}
                     </Select>
                 </FormControl>
             </CardContent>
+
             <CardMedia
-                s sx={{ height: 200, backgroundSize: 'contain', marginTop: 1 }}
+                sx={{
+                    height: 200,
+                    width: 'auto',
+                    maxWidth: '60%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    margin: '0 auto',
+                    marginBottom:'5px',
+                }}
                 image={img}
                 title="Filter"
             />
-            <CardContent>
-                <Typography variant="h5" component="h1" sx={{color:'white'}}>
-                    <SearchIcon fontSize="medium" sx={{color:'white'}} />
-                    Filter the movies.
-                    <br />
-                </Typography>
-            </CardContent>
-        </Card>
+        </StyledCard>
     );
 }

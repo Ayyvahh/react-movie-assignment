@@ -17,15 +17,17 @@ const Header = (props ) => {
             sx={{
                 display: "flex",
                 justifyContent: "space-around",
+                alignItems: "center",
                 flexWrap: "wrap",
                 marginBottom: 1.5,
+                padding:'5px',
             }}
         >
             <IconButton aria-label="go back" onClick={() => navigate(-1)}>
                 <ArrowBackIcon color="primary" fontSize="large" />
             </IconButton>
 
-            <Typography variant="h4" component="h3">
+            <Typography variant="h4" component="h4" >
                 {title}
             </Typography>
             <IconButton aria-label="go forward" onClick={() => navigate(+1)}>

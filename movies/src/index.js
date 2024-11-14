@@ -33,6 +33,9 @@ const darkTheme = createTheme({
         primary: {
             main: '#FF3131',
         },
+        paper: {
+            main: '#121010'
+        },
     },
 });
 

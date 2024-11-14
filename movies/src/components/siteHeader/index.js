@@ -53,6 +53,8 @@ const StyledButton = styled(Button)({
 });
 
 
+
+
 const SiteHeader
 = ({ history }) => {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -89,9 +91,7 @@ const SiteHeader
                             onClick={() => navigate('/')}
                         />
                     </StyledTypography>
-                    <Typography variant="h6" sx={{ flexGrow: 1 }}>
-                        All you ever wanted to know about Movies!
-                    </Typography>
+
                     {isMobile ? (
                         <>
                             <IconButton
