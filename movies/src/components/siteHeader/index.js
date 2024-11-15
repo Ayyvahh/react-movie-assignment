@@ -46,8 +46,9 @@ const StyledButton = styled(Button)({
      color: 'white',
     '&:hover':{
         color:'#FF3131',
+        fontWeight: 'bold',
         transform: 'scale(1.2)',
-        marginLeft: 3,
+        marginLeft: 15,
         transition: 'all 0.2s ease',
     }
 });
