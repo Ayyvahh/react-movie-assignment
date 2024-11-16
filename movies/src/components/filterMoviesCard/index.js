@@ -19,10 +19,10 @@ import {styled} from "@mui/material/styles";
 
 
 const StyledCard = styled(Card)({
-    minHeight:400,
+    minHeight: '100%',
     width: '100%',
-    borderRadius:'15px',
-    backgroundColor:'#1B1B1B'
+    borderRadius: '15px',
+    backgroundColor: '#202020',
 });
 
 
@@ -112,20 +112,6 @@ export default function FilterMoviesCard(props) {
                 </FormControl>
             </CardContent>
 
-            <CardMedia
-                sx={{
-                    height: 200,
-                    width: 'auto',
-                    maxWidth: '60%',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    margin: '0 auto',
-                    marginBottom:'5px',
-                }}
-                image={img}
-                title="Filter"
-            />
         </StyledCard>
     );
 }

@@ -7,7 +7,7 @@ import AddToMustWatch from "../components/cardIcons/addToMustWatch";
 
 const UpcomingMoviesPage = (props) => {
 
-    const {  data, error, isLoading, isError }  = useQuery('upcomingMovies', getUpcomingMovies)
+    const {  data, error, isLoading, isError }  = useQuery('upcoming', getUpcomingMovies)
 
     if (isLoading) {
         return <Spinner />

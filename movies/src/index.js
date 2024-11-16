@@ -13,6 +13,7 @@ import AddMovieReviewPage from './pages/addMovieReviewPage'
 import UpcomingMoviesPage from "./pages/upcomingMoviesPage";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import MustWatchPage from "./pages/MustWatchPage";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -50,6 +51,7 @@ const App = () => {
                     <Routes>
                         <Route path="/movies/upcoming" element={<UpcomingMoviesPage />} />
                         <Route path="/movies/favorites" element={<FavoriteMoviesPage />} />
+                        <Route path="/movies/mustWatch" element={<MustWatchPage />} />
                         <Route path="/reviews/:id" element={ <MovieReviewPage /> } />
                         <Route path="/movies/:id" element={<MoviePage />} />
                         <Route path="/" element={<HomePage />} />

@@ -37,7 +37,7 @@ const StyledCardMedia = styled(CardMedia)({
 
 
 export default function MovieCard({ movie, action }) {
-    const { favorites } = useContext(MoviesContext);
+    const { favorites, mustWatches } = useContext(MoviesContext);
 
     if (favorites.find((id) => id === movie.id)) {
         movie.favorite = true;
@@ -46,12 +46,19 @@ export default function MovieCard({ movie, action }) {
     }
 
 
+    if (mustWatches.find((id) => id === movie.id)) {
+        movie.mustWatch = true;
+    } else {
+        movie.mustWatch = false;
+    }
 
     const releaseDate = movie.release_date ? new Date(movie.release_date) : null;
     const formattedReleaseDate = releaseDate ? releaseDate.toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'long',
     }) : 'N/A';
+
+
 
     return (
             <StyledCard>

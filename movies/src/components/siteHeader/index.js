@@ -67,10 +67,11 @@ const SiteHeader
     const navigate = useNavigate();
 
     const menuOptions = [
-        { label: "Home", path: "/" },
-        { label: "Favorites", path: "/movies/favorites" },
+        { label: "Discover Movies", path: "/" },
         { label: "Upcoming", path: "/movies/upcoming" },
-        { label: "Must Watch", path: "/" },
+
+        { label: "Favorites", path: "/movies/favorites" },
+        { label: "Must Watch", path: "/movies/mustWatch" },
     ];
 
     const handleMenuSelect = (pageURL) => {
