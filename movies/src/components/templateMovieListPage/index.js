@@ -32,7 +32,7 @@ function MovieListPageTemplate({ movies, title, action }) {
                 <Grid size={12} sx={{marginTop: '17px'}}>
                     <Header title={title}/>
                 </Grid>
-                <Grid container sx={{flex: "1 1 500px", padding: "20px"}}>
+                <Grid container item spacing={3} sx={{flex: "1 1 500px", padding: "30px"}}>
                     <MovieList action={action} movies={displayedMovies}></MovieList>
                 </Grid>
             </Grid>
