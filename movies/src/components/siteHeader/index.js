@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -7,9 +7,8 @@ import Button from "@mui/material/Button";
 import MenuIcon from "@mui/icons-material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import { useNavigate } from "react-router-dom";
-import { styled } from '@mui/material/styles';
-import { useTheme } from "@mui/material/styles";
+import {useNavigate} from "react-router-dom";
+import {styled, useTheme} from '@mui/material/styles';
 import useMediaQuery from "@mui/material/useMediaQuery";
 import img from '../../images/headerLogo.png';
 
@@ -69,6 +68,7 @@ const SiteHeader
     const menuOptions = [
         { label: "Discover Movies", path: "/" },
         { label: "Upcoming", path: "/movies/upcoming" },
+        {label: "Now in Cinemas", path: "/movies/nowShowing"},
 
         { label: "Favorites", path: "/movies/favorites" },
         { label: "Must Watch", path: "/movies/mustWatch" },

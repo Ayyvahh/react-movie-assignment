@@ -29,6 +29,7 @@ const HomePage = (props) => {
 
     const handlePageChange = (event, value) => {
         setCurrPage(value);
+        window.scroll(0, 0)
     };
 
     return (

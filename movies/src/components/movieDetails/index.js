@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
@@ -18,6 +18,7 @@ const root = {
     listStyle: "none",
     padding: 1.5,
     margin: 0,
+
 };
 const chip = { margin: 0.5 };
 
@@ -26,7 +27,7 @@ const MovieDetails = ({ movie }) => {
 
     return (
         <>
-            <Typography variant="h5" component="h3">
+            <Typography variant="h5" component="h3" sx={{marginTop: '10px'}}>
                 Overview
             </Typography>
 
@@ -36,7 +37,7 @@ const MovieDetails = ({ movie }) => {
 
             <Paper
                 component="ul"
-                sx={{...root}}
+                sx={{...root, marginTop: '10px'}}
             >
                 <li>
                     <Chip label="Genres" sx={{...chip}} color="primary" />

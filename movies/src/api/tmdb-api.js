@@ -107,4 +107,17 @@ export const getMovieReviews = ({ queryKey }) => {
         });
 };
 
-
+export const getNowShowingMovies = (page = 1) => {
+    return fetch(
+        `https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&include_adult=true&include_video=true&page=${page}`).then((response) => {
+        if (!response.ok) {
+            return response.json().then((error) => {
+                throw new Error(error.status_message || "Something went wrong");
+            });
+        }
+        return response.json();
+    })
+        .catch((error) => {
+            throw error;
+        });
+};
