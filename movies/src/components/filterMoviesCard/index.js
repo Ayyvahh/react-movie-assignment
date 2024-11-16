@@ -1,48 +1,33 @@
 import React from "react";
-import Card from "@mui/material/Card";
-import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import SearchIcon from "@mui/icons-material/Search";
-import FilterIcon from "@mui/icons-material/FilterList";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import SortIcon from "@mui/icons-material/Sort";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import img from '../../images/popcorn.png';
-import { getGenres } from "../../api/tmdb-api";
-import { useQuery } from "react-query";
-import Spinner from '../spinner';
+import {useQuery} from "react-query";
+import Spinner from "../spinner";
 import Box from "@mui/material/Box";
 import {styled} from "@mui/material/styles";
+import {getGenres} from "../../api/tmdb-api";
 
-
-const StyledCard = styled(Card)({
-    minHeight: '100%',
-    width: '100%',
-    borderRadius: '15px',
-    backgroundColor: '#202020',
+const StyledCard = styled("div")({
+    minHeight: "100%", width: "100%", borderRadius: "15px", backgroundColor: "#202020", padding: "20px",
 });
 
-
-
 const formControl = {
-    margin: 1,
-    minWidth: 220,
-    minHeight: 30,
-    borderRadius: "12px",
-    width: { xs: '100%', sm: 'auto' },
-
+    margin: 1, minWidth: 220, borderRadius: "12px", width: {xs: "100%", sm: "auto"},
 };
 
-
-
 export default function FilterMoviesCard(props) {
-    const { data, error, isLoading, isError } = useQuery("genres", getGenres);
+    const {data, error, isLoading, isError} = useQuery("genres", getGenres);
 
     if (isLoading) {
-        return <Spinner />;
+        return <Spinner/>;
     }
 
     if (isError) {
@@ -51,7 +36,7 @@ export default function FilterMoviesCard(props) {
 
     const genres = data.genres;
     if (genres[0].name !== "All") {
-        genres.unshift({ id: "0", name: "All" });
+        genres.unshift({id: "0", name: "All"});
     }
 
     const handleChange = (e, type, value) => {
@@ -67,12 +52,16 @@ export default function FilterMoviesCard(props) {
         handleChange(e, "genre", e.target.value);
     };
 
-    return (
-        <StyledCard>
+
+    return (<StyledCard>
             <CardContent>
-                <Box sx={{ display: 'inline-flex', alignItems: 'center' }}>
-                    <SearchIcon fontSize="large" color='primary' />
-                    <Typography variant="h5" component="h2" sx={{ marginLeft: 1 }}>
+                <Box sx={{display: "flex", alignItems: "center", marginBottom: 2}}>
+                    <SearchIcon fontSize="large" color="primary"/>
+                    <Typography
+                        variant="h5"
+                        component="h2"
+                        sx={{marginLeft: 1, color: "white"}}
+                    >
                         Search Movies
                     </Typography>
                 </Box>
@@ -87,9 +76,13 @@ export default function FilterMoviesCard(props) {
                     onChange={handleTextChange}
                 />
 
-                <Box sx={{ display: 'inline-flex', alignItems: 'center', marginTop: 2 }}>
-                    <FilterIcon fontSize="large" color='primary' />
-                    <Typography variant="h5" component="h3" sx={{ marginLeft: 1 }}>
+                <Box sx={{display: "flex", alignItems: "center", marginTop: 3}}>
+                    <FilterAltIcon fontSize="large" color="primary"/>
+                    <Typography
+                        variant="h5"
+                        component="h3"
+                        sx={{marginLeft: 1, color: "white"}}
+                    >
                         Filter By Genre
                     </Typography>
                 </Box>
@@ -103,15 +96,23 @@ export default function FilterMoviesCard(props) {
                         value={props.genreFilter}
                         onChange={handleGenreChange}
                     >
-                        {genres.map((genre) => (
-                            <MenuItem key={genre.id} value={genre.id}>
+                        {genres.map((genre) => (<MenuItem key={genre.id} value={genre.id}>
                                 {genre.name}
-                            </MenuItem>
-                        ))}
+                        </MenuItem>))}
                     </Select>
                 </FormControl>
-            </CardContent>
 
-        </StyledCard>
-    );
+                <Box sx={{display: "flex", alignItems: "center", marginTop: 3}}>
+                    <SortIcon fontSize="large" color="primary"/>
+                    <Typography
+                        variant="h5"
+                        component="h3"
+                        sx={{marginLeft: 1, color: "white"}}
+                    >
+                        Sort Movies
+                    </Typography>
+                </Box>
+
+            </CardContent>
+    </StyledCard>);
 }

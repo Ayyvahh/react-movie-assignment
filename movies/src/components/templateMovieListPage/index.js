@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import Header from "../headerMovieList";
 import FilterCard from "../filterMoviesCard";
 import MovieList from "../movieList";
 import Grid from "@mui/material/Grid2";
+import Drawer from "@mui/material/Drawer";
+import Fab from "@mui/material/Fab";
 
 function MovieListPageTemplate({ movies, title, action }) {
     const [nameFilter, setNameFilter] = useState("");
     const [genreFilter, setGenreFilter] = useState("0");
     const genreId = Number(genreFilter);
+    const [drawerOpen, setDrawerOpen] = useState(false);
+
 
     let displayedMovies = movies
         .filter((m) => {
@@ -23,25 +27,37 @@ function MovieListPageTemplate({ movies, title, action }) {
     };
 
     return (
-        <Grid container>
-            <Grid size={12} sx={{ marginTop: '17px' }}>
-                <Header title={title} />
-            </Grid>
-            <Grid container sx={{flex: "1 1 500px"}}>
-                <Grid
-                    key="find"
-                    size={{xs: 12, sm: 6, md: 4, lg: 3, xl: 2}}
-                    sx={{padding: "10px"}}
-                >
-                    <FilterCard
-                        onUserInput={handleChange}
-                        titleFilter={nameFilter}
-                        genreFilter={genreFilter}
-                    />
+        <>
+            <Grid container>
+                <Grid size={12} sx={{marginTop: '17px'}}>
+                    <Header title={title}/>
                 </Grid>
-                <MovieList action={action} movies={displayedMovies}></MovieList>
+                <Grid container sx={{flex: "1 1 500px", padding: "20px"}}>
+                    <MovieList action={action} movies={displayedMovies}></MovieList>
+                </Grid>
             </Grid>
-        </Grid>
+            <Fab
+                color="primary"
+                variant="extended"
+                onClick={() => setDrawerOpen(true)}
+                sx={{
+                    marginTop: 11, position: "fixed", top: 2, right: 10,
+                }}
+            >
+                Filter Movies
+            </Fab>
+            <Drawer
+                anchor="left"
+                open={drawerOpen}
+                onClose={() => setDrawerOpen(false)}
+            >
+                <FilterCard
+                    onUserInput={handleChange}
+                    titleFilter={nameFilter}
+                    genreFilter={genreFilter}
+                />
+            </Drawer>
+        </>
     );
 }
 export default MovieListPageTemplate;
