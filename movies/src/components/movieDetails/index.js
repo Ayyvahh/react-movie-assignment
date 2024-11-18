@@ -1,15 +1,16 @@
-import React, {useState} from "react";
+import React from "react";
 import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import MonetizationIcon from "@mui/icons-material/MonetizationOn";
 import StarRate from "@mui/icons-material/StarRate";
-import NavigationIcon from "@mui/icons-material/Navigation";
-import Fab from "@mui/material/Fab";
 import Typography from "@mui/material/Typography";
-import Drawer from "@mui/material/Drawer";
-import MovieReviews from "../movieReviews"
-
+import Spinner from "../spinner";
+import {useParams} from "react-router-dom";
+import {useQuery} from "react-query";
+import {getMovie, getMovieCast} from "../../api/tmdb-api";
+import ActorList from "../actorList";
+import Grid from "@mui/material/Grid2";
 
 const root = {
     display: "flex",
@@ -18,16 +19,33 @@ const root = {
     listStyle: "none",
     padding: 1.5,
     margin: 0,
-
 };
 const chip = { margin: 0.5 };
 
-const MovieDetails = ({ movie }) => {
-    const [drawerOpen, setDrawerOpen] = useState(false);
+const MovieDetails = () => {
+    const {id} = useParams();
+
+    const {data: movie, error: movieError, isLoading: isMovieLoading} = useQuery(
+        ["movie", {id}],
+        () => getMovie(id)
+    );
+
+    const {data: cast, error: castError, isLoading: isCastLoading} = useQuery(
+        ["cast", id],
+        () => getMovieCast(id)
+    );
+
+    if (isMovieLoading || isCastLoading) {
+        return <Spinner/>;
+    }
+
+    if (movieError || castError) {
+        return <h1>Error: {movieError?.message || castError?.message}</h1>;
+    }
 
     return (
         <>
-            <Typography variant="h5" component="h3" sx={{marginTop: '10px'}}>
+            <Typography variant="h5" component="h3" sx={{marginTop: "10px"}}>
                 Overview
             </Typography>
 
@@ -35,19 +53,17 @@ const MovieDetails = ({ movie }) => {
                 {movie.overview}
             </Typography>
 
-            <Paper
-                component="ul"
-                sx={{...root, marginTop: '10px'}}
-            >
+            <Paper component="ul" sx={{...root, marginTop: "10px"}}>
                 <li>
-                    <Chip label="Genres" sx={{...chip}} color="primary" />
+                    <Chip label="Genres" sx={{...chip}} color="primary"/>
                 </li>
                 {movie.genres.map((g) => (
                     <li key={g.name}>
-                        <Chip label={g.name} sx={{...chip}} />
+                        <Chip label={g.name} sx={{...chip}}/>
                     </li>
                 ))}
             </Paper>
+
             <Paper component="ul" sx={{...root}}>
                 <Chip icon={<AccessTimeIcon />} label={`${movie.runtime} min.`} />
                 <Chip
@@ -60,10 +76,8 @@ const MovieDetails = ({ movie }) => {
                 />
                 <Chip label={`Released: ${movie.release_date}`} />
             </Paper>
-            <Paper
-                component="ul"
-                sx={{...root}}
-            >
+
+            <Paper component="ul" sx={{...root}}>
                 <li>
                     <Chip label="Production Countries" sx={{...chip}} color="primary"/>
                 </li>
@@ -73,23 +87,15 @@ const MovieDetails = ({ movie }) => {
                     </li>
                 ))}
             </Paper>
-            <Fab
-                color="secondary"
-                variant="extended"
-                onClick={() =>setDrawerOpen(true)}
-                sx={{
-                    position: 'fixed',
-                    bottom: '1em',
-                    right: '1em'
-                }}
-            >
-                <NavigationIcon />
-                Reviews
-            </Fab>
-            <Drawer anchor="top" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
-                <MovieReviews movie={movie} />
-            </Drawer>
+
+            <Typography variant="h5" component="h3" sx={{marginTop: "20px"}}>
+                Cast
+            </Typography>
+            <Grid container item spacing={3} sx={{flex: "1 1 500px", padding: "30px"}}>
+                <ActorList actors={cast}/>
+            </Grid>
         </>
     );
 };
-export default MovieDetails ;
+
+export default MovieDetails;
