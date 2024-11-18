@@ -33,7 +33,7 @@ const StyledImg = styled('img')(({ theme }) => ({
     marginRight: '8px',
     marginBottom: '3px',
     [theme.breakpoints.down("md")]: {
-        height: 50,
+        height: 60,
 
     },
     [theme.breakpoints.down("sm")]: {
