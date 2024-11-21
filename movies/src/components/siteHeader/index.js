@@ -69,6 +69,7 @@ const SiteHeader
         { label: "Discover Movies", path: "/" },
         { label: "Upcoming", path: "/movies/upcoming" },
         {label: "Now in Cinemas", path: "/movies/nowShowing"},
+        {label: "Actors", path: "/actors"},
 
         { label: "Favorites", path: "/movies/favorites" },
         { label: "Must Watch", path: "/movies/mustWatch" },

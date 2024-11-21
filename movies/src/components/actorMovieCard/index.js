@@ -1,14 +1,13 @@
 import React from "react";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid2";
-import {styled} from "@mui/material/styles";
+import Grid from "@mui/material/Grid";
 import StarRateIcon from "@mui/icons-material/StarRate";
-import img from "../../images/actor-placeholder.png";
+import img from "../../images/film-poster-placeholder.png";
 import {Link} from "react-router-dom";
+import {styled} from "@mui/material/styles";
 
 const StyledCard = styled(Card)(({theme}) => ({
     width: 215,
@@ -19,10 +18,10 @@ const StyledCard = styled(Card)(({theme}) => ({
         transform: "scale(1.05)",
     },
     [theme.breakpoints.down("sm")]: {
+        width: 180,
         minHeight: 360,
     },
 }));
-
 
 const StyledCardMedia = styled(CardMedia)({
     height: 360,
@@ -33,18 +32,26 @@ const StyledCardMedia = styled(CardMedia)({
     },
 });
 
-export default function ActorCard({actor}) {
+export default function ActorMovieCard({movie}) {
+    const releaseDate = movie.release_date ? new Date(movie.release_date) : null;
+    const formattedReleaseDate = releaseDate
+        ? releaseDate.toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+        })
+        : "N/A";
+
     return (
         <StyledCard>
-            <Link to={`/actors/${actor.id}`} style={{textDecoration: 'none'}}>
-            <StyledCardMedia
-                image={
-                    actor.profile_path
-                        ? `https://image.tmdb.org/t/p/w500/${actor.profile_path}`
-                        : img
-                }
-                alt={actor.name}
-            />
+            <Link to={`/movies/${movie.id}`} style={{textDecoration: "none"}}>
+                <StyledCardMedia
+                    image={
+                        movie.poster_path
+                            ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
+                            : img
+                    }
+                    alt={movie.title}
+                />
             </Link>
             <CardContent sx={{paddingBottom: 2}}>
                 <Grid
@@ -54,9 +61,10 @@ export default function ActorCard({actor}) {
                         flexDirection: "column",
                         alignItems: "flex-start",
                         paddingTop: 1,
+                        height: "100%",
                     }}
                 >
-                    <Grid item xs={12} sx={{width: "100%", marginBottom: 1}}>
+                    <Grid item xs={12} sx={{marginBottom: 1}}>
                         <Typography
                             variant="h6"
                             component="p"
@@ -70,7 +78,7 @@ export default function ActorCard({actor}) {
                                 maxWidth: "100%",
                             }}
                         >
-                            {actor.name}
+                            {movie.title}
                         </Typography>
                     </Grid>
 
@@ -86,7 +94,7 @@ export default function ActorCard({actor}) {
                                 maxWidth: "100%",
                             }}
                         >
-                            as {actor.character || "Actor"}
+                            {formattedReleaseDate}
                         </Typography>
                     </Grid>
 
@@ -116,13 +124,11 @@ export default function ActorCard({actor}) {
                                 fontSize="small"
                                 sx={{marginRight: 0.5, color: "#FF3131"}}
                             />
-                            Popularity: {actor.popularity.toFixed(1)}
+                            Rating: {movie.vote_average.toFixed(1)}
                         </Typography>
                     </Grid>
                 </Grid>
             </CardContent>
-            <CardActions disableSpacing sx={{paddingTop: 0}}>
-            </CardActions>
         </StyledCard>
     );
 }

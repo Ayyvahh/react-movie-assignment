@@ -1,39 +1,35 @@
 import React from "react";
-import MovieHeader from "../headerMovie";
+import ActorHeader from "../actorPageHeader";
 import Grid from "@mui/material/Grid2";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
-import {getMovieImages} from "../../api/tmdb-api";
 import {useQuery} from "react-query";
-import Spinner from '../spinner'
+import Spinner from "../spinner";
+import {getActorImages} from "../../api/tmdb-api";
 
-
-const TemplateMoviePage = ({ movie, children }) => {
-    const { data , error, isLoading, isError } = useQuery(
-        ["images", { id: movie.id }],
-        getMovieImages
+const TemplateActorPage = ({actor, children}) => {
+    const {data, error, isLoading, isError} = useQuery(
+        ["images", {id: actor.id}],
+        getActorImages
     );
 
-    if (isLoading) {
-        return <Spinner />;
-    }
+    if (isLoading) return <Spinner/>;
+    if (isError) return <h1>{error.message}</h1>;
 
-    if (isError) {
-        return <h1>{error.message}</h1>;
-    }
-    const images = data.posters
+    const images = data?.profiles || [];
 
     return (
         <>
-            <MovieHeader movie={movie} />
-
+            <ActorHeader actor={actor}/>
             <Grid container spacing={6} style={{padding: "15px"}}>
                 <Grid size={{xs: 3}}>
-                    <div sx={{
-                        display: "flex",
-                        flexWrap: "wrap",
-                        justifyContent: "space-around",
-                    }}>
+                    <div
+                        style={{
+                            display: "flex",
+                            flexWrap: "wrap",
+                            justifyContent: "space-around",
+                        }}
+                    >
                         <ImageList
                             sx={{
                                 height: "100vh",
@@ -44,7 +40,7 @@ const TemplateMoviePage = ({ movie, children }) => {
                                 <ImageListItem key={image.file_path} cols={1}>
                                     <img
                                         src={`https://image.tmdb.org/t/p/w500/${image.file_path}`}
-                                        alt={image.poster_path}
+                                        alt={actor.name || "Actor Image"}
                                     />
                                 </ImageListItem>
                             ))}
@@ -60,4 +56,4 @@ const TemplateMoviePage = ({ movie, children }) => {
     );
 };
 
-export default TemplateMoviePage;
+export default TemplateActorPage;

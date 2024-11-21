@@ -135,7 +135,7 @@ export const getMovieCast = async (movieId) => {
         }
 
         // Used to sort the list of cast to show the most popular 6
-        return data.cast?.sort((a, b) => b.popularity - a.popularity).slice(0, 6) || [];
+        return data.cast?.sort((a, b) => b.popularity - a.popularity).slice(0, 10) || [];
     } catch (error) {
         console.error("Error fetching movie cast:", error);
         throw error;
@@ -157,3 +157,51 @@ export const getActors = (page = 1) => {
         });
 };
 
+export const getActor = ({queryKey}) => {
+    const [, idPart] = queryKey;
+    const {id} = idPart;
+    return fetch(
+        `https://api.themoviedb.org/3/person/${id}?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US`
+    ).then((response) => {
+        if (!response.ok) {
+            throw new Error(response.json().message);
+        }
+        return response.json();
+    })
+        .catch((error) => {
+            throw error
+        });
+};
+
+export const getActorImages = ({queryKey}) => {
+    const [, idPart] = queryKey;
+    const {id} = idPart;
+    return fetch(
+        `https://api.themoviedb.org/3/person/${id}/images?api_key=${process.env.REACT_APP_TMDB_KEY}`
+    ).then((response) => {
+        if (!response.ok) {
+            throw new Error(response.json().message);
+        }
+        return response.json();
+
+    })
+        .catch((error) => {
+            throw error
+        });
+};
+
+export const getActorMovieRoles = (args) => {
+    const [, {id}] = args.queryKey;
+    return fetch(
+        `https://api.themoviedb.org/3/person/${id}/movie_credits?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US`
+    )
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(response.statusText);
+            }
+            return response.json();
+        })
+        .catch((error) => {
+            throw error;
+        });
+};
