@@ -6,7 +6,7 @@ import Grid from "@mui/material/Grid2";
 import Drawer from "@mui/material/Drawer";
 import Fab from "@mui/material/Fab";
 
-function ActorListPageTemplate({actors, title}) {
+function ActorListPageTemplate({actors, title, action}) {
     const [nameFilter, setNameFilter] = useState("");
     const [drawerOpen, setDrawerOpen] = useState(false);
 
@@ -21,11 +21,11 @@ function ActorListPageTemplate({actors, title}) {
     return (
         <>
             <Grid container>
-                <Grid size={12} sx={{marginTop: "17px"}}>
+                <Grid size={12} sx={{marginTop: '17px'}}>
                     <Header title={title}/>
                 </Grid>
                 <Grid container item spacing={3} sx={{flex: "1 1 500px", padding: "30px"}}>
-                    <ActorList actors={displayedActors}></ActorList>
+                    <ActorList action={action} actors={displayedActors}></ActorList>
                 </Grid>
             </Grid>
             <Fab
@@ -33,10 +33,7 @@ function ActorListPageTemplate({actors, title}) {
                 variant="extended"
                 onClick={() => setDrawerOpen(true)}
                 sx={{
-                    marginTop: 11,
-                    position: "fixed",
-                    top: 2,
-                    right: 10,
+                    marginTop: 11, position: "fixed", top: 2, right: 10,
                 }}
             >
                 Filter Actors
@@ -48,11 +45,10 @@ function ActorListPageTemplate({actors, title}) {
             >
                 <FilterCard
                     onUserInput={handleChange}
-                    nameFilter={nameFilter}
+                    titleFilter={nameFilter}
                 />
             </Drawer>
         </>
     );
 }
-
 export default ActorListPageTemplate;

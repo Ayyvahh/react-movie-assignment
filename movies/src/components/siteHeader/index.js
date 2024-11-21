@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -8,11 +8,14 @@ import MenuIcon from "@mui/icons-material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import {useNavigate} from "react-router-dom";
-import {styled, useTheme} from '@mui/material/styles';
+import {styled, useTheme} from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import img from '../../images/headerLogo.png';
+import img from "../../images/headerLogo.png";
+import {auth} from "../../services/firebase"; // Import Firebase auth
+import {GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut} from "firebase/auth"; // Firebase functions
+import Avatar from "@mui/material/Avatar"; // Import Avatar component
 
-const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
+const Offset = styled("div")(({theme}) => theme.mixins.toolbar);
 
 // https://www.smashingmagazine.com/2020/07/styled-components-react/
 const StyledAppBar = styled(AppBar)({
@@ -27,14 +30,13 @@ const StyledTypography = styled(Typography)({
     alignItems: 'center',
 });
 
-const StyledImg = styled('img')(({ theme }) => ({
+const StyledImg = styled("img")(({theme}) => ({
     height: 50,
     padding: 1,
     marginRight: '8px',
     marginBottom: '3px',
     [theme.breakpoints.down("md")]: {
         height: 60,
-
     },
     [theme.breakpoints.down("sm")]: {
         height: 40,
@@ -42,27 +44,22 @@ const StyledImg = styled('img')(({ theme }) => ({
 }));
 
 const StyledButton = styled(Button)({
-     color: 'white',
-    '&:hover':{
-        color:'#FF3131',
-        fontWeight: 'bold',
-        transform: 'scale(1.2)',
+    color: "white",
+    "&:hover": {
+        color: "#FF3131",
+        fontWeight: "bold",
+        transform: "scale(1.2)",
         marginLeft: 15,
-        transition: 'all 0.2s ease',
-    }
+        transition: "all 0.2s ease",
+    },
 });
 
-
-
-
-const SiteHeader
-= ({ history }) => {
+const SiteHeader = ({history}) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
-
+    const [user, setUser] = useState(null);
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-
     const navigate = useNavigate();
 
     const menuOptions = [
@@ -70,9 +67,9 @@ const SiteHeader
         { label: "Upcoming", path: "/movies/upcoming" },
         {label: "Now in Cinemas", path: "/movies/nowShowing"},
         {label: "Actors", path: "/actors"},
-
         { label: "Favorites", path: "/movies/favorites" },
         { label: "Must Watch", path: "/movies/mustWatch" },
+        {label: "Trending", path: "/movies/Trending"},
     ];
 
     const handleMenuSelect = (pageURL) => {
@@ -83,6 +80,35 @@ const SiteHeader
         setAnchorEl(event.currentTarget);
     };
 
+    const handleSignIn = () => {
+        const provider = new GoogleAuthProvider();
+        signInWithPopup(auth, provider)
+            .then((result) => {
+                setUser(result.user);
+            })
+            .catch((error) => {
+                console.error(error.message);
+            });
+    };
+
+    const handleSignOut = () => {
+        signOut(auth)
+            .then(() => {
+                setUser(null);
+            })
+            .catch((error) => {
+                console.error(error.message);
+            });
+    };
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+            setUser(currentUser);
+        });
+
+        return () => unsubscribe();
+    }, []);
+
     return (
         <>
             <StyledAppBar position="fixed">
@@ -91,7 +117,7 @@ const SiteHeader
                         <StyledImg
                             src={img}
                             alt="Logo"
-                            onClick={() => navigate('/')}
+                            onClick={() => navigate("/")}
                         />
                     </StyledTypography>
 
@@ -142,6 +168,19 @@ const SiteHeader
                                     {opt.label}
                                 </StyledButton>
                             ))}
+
+                            {user ? (
+                                <Avatar
+                                    src={user.photoURL}
+                                    alt={user.displayName}
+                                    onClick={handleSignOut}
+                                    sx={{cursor: "pointer", marginLeft: 2}}
+                                />
+                            ) : (
+                                <StyledButton color="inherit" onClick={handleSignIn}>
+                                    Sign In
+                                </StyledButton>
+                            )}
                         </>
                     )}
                 </Toolbar>

@@ -9,7 +9,7 @@ import Spinner from "../spinner";
 import {useParams} from "react-router-dom";
 import {useQuery} from "react-query";
 import {getMovie, getMovieCast} from "../../api/tmdb-api";
-import ActorList from "../actorList";
+import ActorList from "../movieActorList";
 import Grid from "@mui/material/Grid2";
 
 const root = {

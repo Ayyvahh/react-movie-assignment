@@ -4,6 +4,7 @@ import {getActors} from "../api/tmdb-api";
 import ActorListPageTemplate from "../components/templateActorListPage";
 import Spinner from "../components/spinner";
 import {Pagination} from "@mui/material";
+import AddToFavoritesIcon from "../components/cardIcons/addToFavouriteActors";
 
 const ActorListPage = () => {
     const [currPage, setCurrPage] = useState(1);
@@ -30,8 +31,12 @@ const ActorListPage = () => {
             <ActorListPageTemplate
                 title="Popular Actors"
                 actors={actors}
+                action={(actor) => (
+                    <>
+                        <AddToFavoritesIcon actor={actor}/>
+                    </>
+                )}
             />
-
             <Pagination
                 style={{marginBottom: '25vh', display: 'flex', justifyContent: 'center'}}
                 count={totalPages}

@@ -9,6 +9,7 @@ import SiteHeader from './components/siteHeader'
 import {QueryClient, QueryClientProvider} from "react-query";
 import {ReactQueryDevtools} from 'react-query/devtools';
 import MoviesContextProvider from "./contexts/moviesContext";
+import ActorsContextProvider from "./contexts/actorsContext";
 import AddMovieReviewPage from './pages/addMovieReviewPage'
 import UpcomingMoviesPage from "./pages/upcomingMoviesPage";
 import {createTheme, ThemeProvider} from '@mui/material/styles';
@@ -17,6 +18,7 @@ import MustWatchPage from "./pages/MustWatchPage";
 import NowShowingMovies from "./pages/nowShowingPage";
 import ActorListPage from "./pages/actorListPage";
 import ActorPage from "./pages/actorDetailsPage";
+import {AuthProvider} from "./contexts/authProvider";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -48,9 +50,11 @@ const App = () => {
         <ThemeProvider theme={darkTheme}>
             <CssBaseline />
         <QueryClientProvider client={queryClient}>
+            <AuthProvider>
             <BrowserRouter>
                 <SiteHeader />
                 <MoviesContextProvider>
+                    <ActorsContextProvider>
                     <Routes>
                         <Route path="/movies/upcoming" element={<UpcomingMoviesPage />} />
                         <Route path="/movies/favorites" element={<FavoriteMoviesPage />} />
@@ -65,8 +69,10 @@ const App = () => {
                         <Route path="/reviews/form" element={ <AddMovieReviewPage /> } />
 
                     </Routes>
+                    </ActorsContextProvider>
                 </MoviesContextProvider>
             </BrowserRouter>
+            </AuthProvider>
             <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
         </ThemeProvider>
