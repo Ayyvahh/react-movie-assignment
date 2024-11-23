@@ -8,24 +8,42 @@ import Fab from "@mui/material/Fab";
 
 function ActorListPageTemplate({actors, title, action}) {
     const [nameFilter, setNameFilter] = useState("");
+    const [genderFilter, setGenderFilter] = useState("0");
+    const [sortFilter, setSortFilter] = useState("");
     const [drawerOpen, setDrawerOpen] = useState(false);
 
-    let displayedActors = actors.filter((actor) => {
-        return actor.name.toLowerCase().includes(nameFilter.toLowerCase());
-    });
+    let displayedActors = actors
+        .filter((actor) => {
+            return actor.name.toLowerCase().includes(nameFilter.toLowerCase());
+        }).filter((actor) => {
+            if (genderFilter === "0") return true;
+            return actor.gender === parseInt(genderFilter);
+        }).sort((a, b) => {
+            if (sortFilter === "popularity-asc") {
+                return a.popularity - b.popularity;
+            } else if (sortFilter === "popularity-desc") {
+                return b.popularity - a.popularity;
+            } else {
+                return 0;
+            }
+        });
+
+
 
     const handleChange = (type, value) => {
         if (type === "name") setNameFilter(value);
+        if (type === "gender") setGenderFilter(value);
+        if (type === "sort") setSortFilter(value);
     };
 
     return (
         <>
             <Grid container>
-                <Grid size={12} sx={{marginTop: '17px'}}>
+                <Grid size={12} sx={{marginTop: "17px"}}>
                     <Header title={title}/>
                 </Grid>
                 <Grid container item spacing={3} sx={{flex: "1 1 500px", padding: "30px"}}>
-                    <ActorList action={action} actors={displayedActors}></ActorList>
+                    <ActorList action={action} actors={displayedActors}/>
                 </Grid>
             </Grid>
             <Fab
@@ -33,7 +51,10 @@ function ActorListPageTemplate({actors, title, action}) {
                 variant="extended"
                 onClick={() => setDrawerOpen(true)}
                 sx={{
-                    marginTop: 11, position: "fixed", top: 2, right: 10,
+                    marginTop: 11,
+                    position: "fixed",
+                    top: 2,
+                    right: 10,
                 }}
             >
                 Filter Actors
@@ -46,9 +67,12 @@ function ActorListPageTemplate({actors, title, action}) {
                 <FilterCard
                     onUserInput={handleChange}
                     titleFilter={nameFilter}
+                    genderFilter={genderFilter}
+                    sortFilter={sortFilter}
                 />
             </Drawer>
         </>
     );
 }
+
 export default ActorListPageTemplate;

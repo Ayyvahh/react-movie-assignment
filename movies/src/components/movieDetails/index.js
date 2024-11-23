@@ -8,9 +8,14 @@ import Typography from "@mui/material/Typography";
 import Spinner from "../spinner";
 import {useParams} from "react-router-dom";
 import {useQuery} from "react-query";
-import {getMovie, getMovieCast} from "../../api/tmdb-api";
+import {getMovie, getMovieCast, getRecommendedMovies} from "../../api/tmdb-api";
 import ActorList from "../movieActorList";
 import Grid from "@mui/material/Grid2";
+import ActorMoviesList from "../actorMoviesList";
+import Divider from "@mui/material/Divider";
+import MovieFilterIcon from '@mui/icons-material/MovieFilter';
+import TheaterComedyIcon from '@mui/icons-material/TheaterComedy';
+
 
 const root = {
     display: "flex",
@@ -36,12 +41,17 @@ const MovieDetails = () => {
         () => getMovieCast(id)
     );
 
-    if (isMovieLoading || isCastLoading) {
+    const {data: recommendedMovies, error: recommendedError, isLoading: isRecommendedLoading} = useQuery(
+        ["recommended", id],
+        () => getRecommendedMovies(id)
+    );
+
+    if (isMovieLoading || isCastLoading || isRecommendedLoading) {
         return <Spinner/>;
     }
 
     if (movieError || castError) {
-        return <h1>Error: {movieError?.message || castError?.message}</h1>;
+        return <h1>Error: {movieError?.message || castError?.message || recommendedError?.message}</h1>;
     }
 
     return (
@@ -108,22 +118,51 @@ const MovieDetails = () => {
                 ))}
             </Paper>
 
+            <Divider sx={{margin: "20px 0"}}/>
+
             <Typography
                 variant="h5"
                 component="h3"
                 sx={{
                     marginTop: "20px",
-                    fontSize: {xs: "1.1rem", sm: "1.2rem", md: "1.4rem"},
+                    fontSize: {xs: "1.1rem", sm: "1.4rem", md: "1.5rem"},
                     fontWeight: "bold",
                     fontStyle: "italic",
                     marginBottom: "15px",
+                    display: "flex",
+                    alignItems: "center",
                 }}
             >
-                Top 10 Popular Cast Members
+                <TheaterComedyIcon fontSize={'medium'} color={'primary'} sx={{marginRight: "8px"}}/>
+
+                Top 10 Popular Cast Members starring in {movie.title}
             </Typography>
 
             <Grid container item spacing={3} sx={{flex: "1 1 500px", padding: "5px"}}>
                 <ActorList actors={cast}/>
+            </Grid>
+
+            <Divider sx={{margin: "20px 0"}}/>
+
+            <Typography
+                variant="h5"
+                component="h3"
+                sx={{
+                    marginTop: "20px",
+                    fontSize: {xs: "1.1rem", sm: "1.4rem", md: "1.5rem"},
+                    fontWeight: "bold",
+                    fontStyle: "italic",
+                    marginBottom: "15px",
+                    display: "flex",
+                    alignItems: "center",
+                }}
+            >
+                <MovieFilterIcon fontSize={'medium'} color={'primary'} sx={{marginRight: "8px"}}/>
+                Top 10 Recommended Movies
+            </Typography>
+
+            <Grid container item spacing={3} sx={{flex: "1 1 500px", padding: "5px"}}>
+                <ActorMoviesList movies={recommendedMovies}/>
             </Grid>
         </>
     );

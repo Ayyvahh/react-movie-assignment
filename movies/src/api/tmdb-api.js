@@ -19,22 +19,6 @@ export const getMovies = (page = 1, genre = "") => {
         });
 };
 
-export const getSearchMovies = (searchTerm, page = 1) => {
-    return fetch(
-        `https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_TMDB_KEY}&query=${encodeURIComponent(searchTerm)}&page=${page}`
-    )
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .catch((error) => {
-            throw error;
-        });
-};
-
-
 
 export const getUpcomingMovies = (page = 1) => {
     const date = new Date().toISOString().split('T')[0];
@@ -155,10 +139,29 @@ export const getMovieCast = async (movieId) => {
             throw new Error(data.status_message || "Something went wrong");
         }
 
-        // Used to sort the list of cast to show the most popular 6
+        // Used to sort the list of cast to show the most popular 10
         return data.cast?.sort((a, b) => b.popularity - a.popularity).slice(0, 10) || [];
     } catch (error) {
         console.error("Error fetching movie cast:", error);
+        throw error;
+    }
+};
+
+export const getRecommendedMovies = async (movieId) => {
+    const url = `https://api.themoviedb.org/3/movie/${movieId}/recommendations?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US`;
+
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.status_message || "Something went wrong");
+        }
+
+        // Used to sort the list of recommended to show the most popular 10
+        return data.results.sort((a, b) => b.popularity - a.popularity).slice(0, 10) || [];
+    } catch (error) {
+        console.error("Error fetching recommended movies:", error);
         throw error;
     }
 };

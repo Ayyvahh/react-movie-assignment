@@ -11,7 +11,7 @@ import {styled} from "@mui/material/styles";
 import {ActorsContext} from "../../contexts/actorsContext";
 import MaleIcon from '@mui/icons-material/Male';
 import FemaleIcon from '@mui/icons-material/Female';
-import {Box} from '@mui/material';
+import StarRateIcon from "@mui/icons-material/StarRate";
 
 const StyledCard = styled(Card)({
     minHeight: 360,
@@ -20,11 +20,8 @@ const StyledCard = styled(Card)({
     transition: 'transform 0.3s ease',
     '&:hover': {
         transform: 'scale(1.05)',
-
-
     },
 });
-
 
 const StyledCardMedia = styled(CardMedia)({
     height: 380,
@@ -33,9 +30,7 @@ const StyledCardMedia = styled(CardMedia)({
     '&:hover': {
         opacity: '0.8',
     }
-
-})
-
+});
 
 export default function ActorCard({actor, action}) {
     const {favorites} = useContext(ActorsContext);
@@ -46,7 +41,11 @@ export default function ActorCard({actor, action}) {
         actor.favorite = false;
     }
 
-    const genderIcon = actor.gender === 1 ? <FemaleIcon sx={{color: '#FF3131'}}/> : <MaleIcon sx={{color: '#FF3131'}}/>;
+    const genderIcon = actor.gender === 1 ? (
+        <FemaleIcon sx={{color: '#FF3131'}}/>
+    ) : (
+        <MaleIcon sx={{color: '#FF3131'}}/>
+    );
 
     return (
         <StyledCard>
@@ -64,74 +63,84 @@ export default function ActorCard({actor, action}) {
                 <Grid
                     container
                     sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        width: '100%',
-                        alignItems: 'flex-start',
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "flex-start",
                         paddingTop: 1,
                     }}
                 >
-                    <Grid item xs={12} sx={{width: '100%', marginBottom: 1}}>
+                    <Grid item xs={12} sx={{width: "100%", marginBottom: 1}}>
                         <Typography
-                            variant="h5"
+                            variant="h6"
                             component="p"
                             sx={{
                                 fontWeight: 600,
-                                color: 'white',
-                                fontSize: '1.2rem',
-                                paddingLeft: '5px',
-                                paddingRight: '5px',
-                                textOverflow: 'ellipsis',
-                                overflow: 'hidden',
-                                whiteSpace: 'nowrap',
-                                maxWidth: '100%',
+                                color: "white",
+                                fontSize: "1rem",
+                                textOverflow: "ellipsis",
+                                overflow: "hidden",
+                                whiteSpace: "nowrap",
+                                maxWidth: "100%",
                             }}
                         >
                             {actor.name}
                         </Typography>
+                    </Grid>
+
+                    <Grid item xs={12}>
                         <Typography
                             variant="body2"
                             sx={{
-                                color: 'grey',
-                                fontSize: '1rem',
-                                paddingLeft: '5px',
-                                paddingRight: '5px',
-                                paddingTop: '2px',
+                                color: "grey",
+                                fontSize: "1rem",
+                                textOverflow: "ellipsis",
+                                overflow: "hidden",
+                                whiteSpace: "nowrap",
+                                maxWidth: "100%",
                             }}
                         >
                             Actor
                         </Typography>
                     </Grid>
-
                     <Grid
                         item
                         xs={12}
                         sx={{
-                            display: 'flex',
-                            alignItems: 'center',
+                            display: "flex",
+                            alignItems: "center",
                             marginTop: 1,
-                            width: '100%',
                         }}
                     >
                         <Typography
-                            variant="body1"
+                            variant="body2"
                             sx={{
-                                color: 'white',
-                                display: 'flex',
-                                alignItems: 'center',
+                                color: "white",
+                                display: "flex",
+                                alignItems: "center",
                                 fontWeight: 500,
+                                fontSize: '1rem',
                                 marginRight: 2,
                             }}
                         >
-                            <Box sx={{display: 'flex', alignItems: 'center'}}>
-                                {genderIcon}
-                                <Typography
-                                    variant="body1"
-                                    sx={{marginLeft: 1}}
-                                >
-                                    {actor.gender === 1 ? 'Female' : 'Male'}
-                                </Typography>
-                            </Box>
+                            <StarRateIcon
+                                fontSize="small"
+                                sx={{marginRight: 0.5, color: "#FF3131"}}
+                            />
+                            {actor.popularity.toFixed(1)}
+                        </Typography>
+
+                        <Typography
+                            variant="body2"
+                            sx={{
+                                color: "white",
+                                display: "flex",
+                                alignItems: "center",
+                                fontWeight: 500,
+                                fontSize: '1rem',
+                            }}
+                        >
+                            {genderIcon}
+                            {actor.gender === 1 ? "Female" : "Male"}
                         </Typography>
                     </Grid>
                 </Grid>
