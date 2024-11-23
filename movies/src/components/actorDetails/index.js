@@ -15,6 +15,8 @@ import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import WorkIcon from "@mui/icons-material/Work";
 import Grid from "@mui/material/Grid2";
 import ActorMoviesList from "../actorMoviesList";
+import Divider from "@mui/material/Divider";
+import TheaterComedyIcon from "@mui/icons-material/TheaterComedy";
 
 const root = {
     display: "flex",
@@ -87,7 +89,7 @@ const ActorDetails = () => {
                 sx={{
                     marginTop: "10px",
                     marginLeft: "10px",
-                    fontSize: {xs: "0.7rem", sm: "0.8rem", md: "1rem"},
+                    fontSize: {xs: "1.1rem", sm: "1.4rem", md: "1.5rem"},
                     alignSelf: "center",
                 }}
                 variant="contained"
@@ -107,6 +109,7 @@ const ActorDetails = () => {
                     <Chip icon={<LocationOnIcon/>} label={`Born in: ${actor.place_of_birth}`} sx={{...chip}}/>
                 )}
             </Paper>
+            <Divider sx={{margin: "20px 0"}}/>
 
             <Typography
                 variant="h6"
@@ -119,6 +122,8 @@ const ActorDetails = () => {
                     marginBottom: "15px",
                 }}
             >
+                <TheaterComedyIcon fontSize={'medium'} color={'primary'} sx={{marginRight: "8px"}}/>
+
                 Top 10 Movie Roles
             </Typography>
             <Grid container item spacing={3} sx={{flex: "1 1 500px", padding: "5px"}}>
