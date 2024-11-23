@@ -33,7 +33,7 @@ const TemplateMoviePage = ({ movie, children }) => {
         <>
             <MovieHeader movie={movie} />
 
-            <Grid container spacing={6} style={{padding: "15px"}}>
+            <Grid container spacing={5} style={{padding: "15px"}}>
                 <Grid item xs={3}>
                     <div
                         style={{
@@ -45,6 +45,7 @@ const TemplateMoviePage = ({ movie, children }) => {
                         <ImageList
                             sx={{
                                 height: "100vh",
+                                width: "90%",
                             }}
                             cols={1}
                         >

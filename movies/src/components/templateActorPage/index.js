@@ -21,7 +21,7 @@ const TemplateActorPage = ({actor, children}) => {
     return (
         <>
             <ActorHeader actor={actor}/>
-            <Grid container spacing={6} style={{padding: "15px"}}>
+            <Grid container spacing={5} style={{padding: "15px"}}>
                 <Grid size={{xs: 3}}>
                     <div
                         style={{
@@ -33,6 +33,8 @@ const TemplateActorPage = ({actor, children}) => {
                         <ImageList
                             sx={{
                                 height: "100vh",
+                                width: "90%",
+
                             }}
                             cols={1}
                         >

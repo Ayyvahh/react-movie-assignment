@@ -26,7 +26,7 @@ const StyledCard = styled(Card)(({theme}) => ({
 
 
 const StyledCardMedia = styled(CardMedia)({
-    height: 360,
+    height: 280,
     objectFit: "cover",
     display: "block",
     "&:hover": {

@@ -89,7 +89,6 @@ const ActorDetails = () => {
                 sx={{
                     marginTop: "10px",
                     marginLeft: "10px",
-                    fontSize: {xs: "1.1rem", sm: "1.4rem", md: "1.5rem"},
                     alignSelf: "center",
                 }}
                 variant="contained"

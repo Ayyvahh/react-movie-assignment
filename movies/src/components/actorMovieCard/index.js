@@ -3,7 +3,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
+import Grid from "@mui/material/Grid2";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import img from "../../images/film-poster-placeholder.png";
 import {Link} from "react-router-dom";
@@ -24,8 +24,8 @@ const StyledCard = styled(Card)(({theme}) => ({
 }));
 
 const StyledCardMedia = styled(CardMedia)({
-    height: 360,
-    objectFit: "cover",
+    height: 280,
+    objectFit: "contain",
     display: "block",
     "&:hover": {
         opacity: 0.8,
