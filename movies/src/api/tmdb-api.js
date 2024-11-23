@@ -1,18 +1,39 @@
-export const getMovies = (page = 1) => {
-    return fetch(
-        `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&include_adult=false&include_video=true&page=${page}`
-    ).then((response) => {
-        if (!response.ok) {
-            return response.json().then((error) => {
-                throw new Error(error.status_message || "Something went wrong");
-            });
-        }
-        return response.json();
-    })
+export const getMovies = (page = 1, genre = "") => {
+    let url = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&include_adult=false&include_video=true&page=${page}`;
+
+    if (genre && genre !== "0") {
+        url += `&with_genres=${genre}`;
+    }
+
+    return fetch(url)
+        .then((response) => {
+            if (!response.ok) {
+                return response.json().then((error) => {
+                    throw new Error(error.status_message || "Something went wrong");
+                });
+            }
+            return response.json();
+        })
         .catch((error) => {
             throw error;
         });
 };
+
+export const getSearchMovies = (searchTerm, page = 1) => {
+    return fetch(
+        `https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_TMDB_KEY}&query=${encodeURIComponent(searchTerm)}&page=${page}`
+    )
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .catch((error) => {
+            throw error;
+        });
+};
+
 
 
 export const getUpcomingMovies = (page = 1) => {

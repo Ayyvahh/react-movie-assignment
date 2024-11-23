@@ -35,6 +35,7 @@ export default function FilterMoviesCard(props) {
     }
 
     const genres = data.genres;
+
     if (genres[0].name !== "All") {
         genres.unshift({id: "0", name: "All"});
     }
@@ -53,15 +54,12 @@ export default function FilterMoviesCard(props) {
     };
 
 
-    return (<StyledCard>
+    return (
+        <StyledCard>
             <CardContent>
                 <Box sx={{display: "flex", alignItems: "center", marginBottom: 2}}>
                     <SearchIcon fontSize="large" color="primary"/>
-                    <Typography
-                        variant="h5"
-                        component="h2"
-                        sx={{marginLeft: 1, color: "white"}}
-                    >
+                    <Typography variant="h5" component="h2" sx={{marginLeft: 1, color: "white"}}>
                         Search Movies
                     </Typography>
                 </Box>
@@ -78,11 +76,7 @@ export default function FilterMoviesCard(props) {
 
                 <Box sx={{display: "flex", alignItems: "center", marginTop: 3}}>
                     <FilterAltIcon fontSize="large" color="primary"/>
-                    <Typography
-                        variant="h5"
-                        component="h3"
-                        sx={{marginLeft: 1, color: "white"}}
-                    >
+                    <Typography variant="h5" component="h3" sx={{marginLeft: 1, color: "white"}}>
                         Filter By Genre
                     </Typography>
                 </Box>
@@ -92,27 +86,41 @@ export default function FilterMoviesCard(props) {
                     <Select
                         labelId="genre-label"
                         id="genre-select"
-                        defaultValue=""
                         value={props.genreFilter}
                         onChange={handleGenreChange}
                     >
-                        {genres.map((genre) => (<MenuItem key={genre.id} value={genre.id}>
+                        {genres.map((genre) => (
+                            <MenuItem key={genre.id} value={genre.id}>
                                 {genre.name}
-                        </MenuItem>))}
+                            </MenuItem>
+                        ))}
                     </Select>
                 </FormControl>
 
                 <Box sx={{display: "flex", alignItems: "center", marginTop: 3}}>
                     <SortIcon fontSize="large" color="primary"/>
-                    <Typography
-                        variant="h5"
-                        component="h3"
-                        sx={{marginLeft: 1, color: "white"}}
-                    >
+                    <Typography variant="h5" component="h3" sx={{marginLeft: 1, color: "white"}}>
                         Sort Movies
                     </Typography>
                 </Box>
 
+                <FormControl sx={formControl}>
+                    <InputLabel id="sort-label">Sort By</InputLabel>
+                    <Select
+                        labelId="sort-label"
+                        id="sort-select"
+                        value={props.sortFilter}
+                        onChange={(e) => props.onUserInput("sort", e.target.value)}
+                    >
+                        <MenuItem value="0">No Sorting</MenuItem>
+                        <MenuItem value="popularity-asc">Popularity (Asc)</MenuItem>
+                        <MenuItem value="popularity-desc">Popularity (Desc)</MenuItem>
+                        <MenuItem value="rating-asc">Rating (Asc)</MenuItem>
+                        <MenuItem value="rating-desc">Rating (Desc)</MenuItem>
+                    </Select>
+                </FormControl>
+
             </CardContent>
-    </StyledCard>);
+        </StyledCard>
+    );
 }

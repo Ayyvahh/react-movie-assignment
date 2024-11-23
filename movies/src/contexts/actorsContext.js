@@ -5,19 +5,19 @@ export const ActorsContext = React.createContext(null);
 const ActorsContextProvider = (props) => {
     const [favorites, setFavorites] = useState([])
 
-    const addToFavorites = (movie) => {
+    const addToFavorites = (actor) => {
         let newFavorites = [];
-        if (!favorites.includes(movie.id)) {
-            newFavorites = [...favorites, movie.id];
+        if (!favorites.includes(actor.id)) {
+            newFavorites = [...favorites, actor.id];
         } else {
             newFavorites = [...favorites];
         }
         setFavorites(newFavorites)
     };
 
-    const removeFromFavorites = (movie) => {
+    const removeFromFavorites = (actor) => {
         setFavorites(favorites.filter(
-            (mId) => mId !== movie.id
+            (mId) => mId !== actor.id
         ))
     };
 
