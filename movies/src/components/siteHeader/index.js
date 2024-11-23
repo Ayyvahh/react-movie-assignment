@@ -11,9 +11,9 @@ import {useNavigate} from "react-router-dom";
 import {styled, useTheme} from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import img from "../../images/headerLogo.png";
-import {auth} from "../../services/firebase"; // Import Firebase auth
-import {GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut} from "firebase/auth"; // Firebase functions
-import Avatar from "@mui/material/Avatar"; // Import Avatar component
+import {auth} from "../../services/firebase";
+import {GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut} from "firebase/auth";
+import Avatar from "@mui/material/Avatar";
 
 const Offset = styled("div")(({theme}) => theme.mixins.toolbar);
 
@@ -64,11 +64,12 @@ const SiteHeader = ({history}) => {
 
     const menuOptions = [
         { label: "Discover Movies", path: "/" },
-        { label: "Upcoming", path: "/movies/upcoming" },
+        {label: "Upcoming Movies", path: "/movies/upcoming"},
         {label: "Now in Cinemas", path: "/movies/nowShowing"},
-        {label: "Actors", path: "/actors"},
-        { label: "Favorites", path: "/movies/favorites" },
         { label: "Must Watch", path: "/movies/mustWatch" },
+        {label: "Favorite Movies", path: "/movies/favorites"},
+        {label: "Actors", path: "/actors"},
+        {label: "Favorite Actors", path: "/actors/favorites"},
     ];
 
     const handleMenuSelect = (pageURL) => {

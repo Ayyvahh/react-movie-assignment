@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -9,6 +9,7 @@ import {styled} from "@mui/material/styles";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import img from "../../images/actor-placeholder.png";
 import {Link} from "react-router-dom";
+import {ActorsContext} from "../../contexts/actorsContext";
 
 const StyledCard = styled(Card)(({theme}) => ({
     width: 215,
@@ -34,6 +35,16 @@ const StyledCardMedia = styled(CardMedia)({
 });
 
 export default function ActorCard({actor}) {
+
+    const {favorites} = useContext(ActorsContext);
+
+    if (favorites.find((id) => id === actor.id)) {
+        actor.favorite = true;
+    } else {
+        actor.favorite = false;
+    }
+
+
     return (
         <StyledCard>
             <Link to={`/actors/${actor.id}`} style={{textDecoration: 'none'}}>
